@@ -14,13 +14,13 @@ const selectedService = computed(
 <template>
   <section class="section services section--alt">
     <div class="services__content">
-      <div class="services__header">
-        <div class="services__header-intro">
+      <div class="header services__header">
+        <div class="header__intro">
           <span class="header__eyebrow">Our services</span>
           <h2 class="header__heading">Supporting manufacturers across key sectors</h2>
         </div>
 
-        <p class="services__header-description">
+        <p class="header__body">
           ATM Automation designs and builds bespoke automation, assembly, inspection and
           manufacturing equipment for regulated and advanced manufacturing environments,
           including medical device, healthcare, automotive, food, packaging, energy and
@@ -45,11 +45,19 @@ const selectedService = computed(
         </div>
 
         <article v-if="selectedService" class="services__detail">
-          <img
-            class="services__detail-image"
-            :src="`/images/services/${selectedService.image}`"
-            :alt="selectedService.name"
-          />
+          <div class="services__detail-image">
+            <!-- All service images mount once and stay in the DOM — only
+                 opacity toggles on click, so switching services never
+                 re-fetches or re-decodes an image (same fix as Highlights). -->
+            <img
+              v-for="service in services"
+              :key="service.id"
+              :src="`/images/services/${service.image}`"
+              :alt="service.name"
+              class="services__detail-image-el"
+              :class="{ 'services__detail-image-el--active': service.id === selectedServiceId }"
+            />
+          </div>
 
           <div class="services__detail-meta">
             <div class="services__detail-tags">
@@ -73,13 +81,13 @@ const selectedService = computed(
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: $spacing-xl;
 }
 
 .services__header {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 40px;
-  align-items: center; // was `flex-center` — not a valid CSS value, silently ignored by the browser
 
   @include below-desktop {
     flex-direction: column;
@@ -87,22 +95,13 @@ const selectedService = computed(
   }
 }
 
-.services__header-intro,
-.services__header-description {
+.services__header .header__intro,
+.services__header .header__body {
   flex: 1 1 0;
 }
 
-.services__header-intro {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xs;
-}
-
-.services__header-description {
+.services__header .header__body {
   margin: 0;
-  font-size: $fs-body;
-  line-height: $lh-body;
-  color: $color-text-secondary;
 }
 
 .services__layout {
@@ -185,10 +184,25 @@ const selectedService = computed(
 }
 
 .services__detail-image {
+  position: relative; // anchors the stacked absolute images
   width: 100%;
   aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: $radius-md;
+}
+
+.services__detail-image-el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  display: block;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  &--active {
+    opacity: 1;
+  }
 }
 
 .services__detail-meta {

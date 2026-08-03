@@ -152,7 +152,7 @@
     font-weight: $fw-regular;
     font-size: $fs-body;
     line-height: $lh-body;
-    max-width: 640px;
+    max-width: 720px;
   }
 
   // Hero-only override — do not use outside the hero section
@@ -169,6 +169,12 @@
   }
 }
 
+// Shared rhythm for all homepage sections: once the header finishes,
+// the section content starts at the same vertical distance everywhere.
+.section .header + * {
+  margin-top: $spacing-lg; // 40px — consistent header-to-content gap
+}
+
 // ==========================================================================
 // Button component
 // Usage: <button class="btn btn--primary">Discuss Your Project</button>
@@ -182,7 +188,7 @@
   font-family: $font-primary;
   font-weight: $fw-medium;
   font-size: $fs-body; // 17px
-  padding: $spacing-md $spacing-sm; // 24px 16px
+  padding: $spacing-sm $spacing-md; // 24px 16px
   border-radius: $radius-md; // 4px
   border: none;
   cursor: pointer;

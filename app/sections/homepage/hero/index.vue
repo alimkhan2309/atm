@@ -81,7 +81,8 @@ onMounted(() => {
   }
 
   @include mobile {
-    padding: $section-padding-y-mobile $section-padding-x-mobile;
+    // padding: $section-padding-y-mobile $section-padding-x-mobile;
+    padding: $section-padding-y-mobile 0;
     min-height: 560px;
   }
 }
@@ -141,6 +142,10 @@ onMounted(() => {
 
   @include below-desktop {
     width: 100%;
+  }
+  @include mobile {
+    align-items: start;
+    flex-direction: column;
   }
 }
 

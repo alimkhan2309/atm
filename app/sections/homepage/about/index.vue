@@ -11,24 +11,26 @@ const stats = [
   <section class="section section--alt">
     <div class="about__content">
       <div class="about__text">
-        <div class="header__intro">
-          <span class="header__eyebrow">About Us</span>
-          <h2 class="header__heading">
-            <span class="about__highlight">50 Years</span> of Precision <br> Manufacturing
-          </h2>
-        </div>
+        <div class="header about__header">
+          <div class="header__intro">
+            <span class="header__eyebrow">About Us</span>
+            <h2 class="header__heading">
+              <span class="about__highlight">50 Years</span> of Precision <br> Manufacturing
+            </h2>
+          </div>
 
-        <div class="about__body">
-          <p class="header__body">
-            For 50 years, ATM Automation has specialised in the design and build of
-            bespoke automation, assembly, inspection and manufacturing equipment for
-            regulated and advanced manufacturing industries.
-          </p>
-          <p class="header__body">
-            From our Leicester facility, our multidisciplinary engineering team
-            delivers complete turnkey solutions ranging from standalone workstations
-            to fully automated production systems.
-          </p>
+          <div class="about__body">
+            <p class="header__body">
+              For 50 years, ATM Automation has specialised in the design and build of
+              bespoke automation, assembly, inspection and manufacturing equipment for
+              regulated and advanced manufacturing industries.
+            </p>
+            <p class="header__body">
+              From our Leicester facility, our multidisciplinary engineering team
+              delivers complete turnkey solutions ranging from standalone workstations
+              to fully automated production systems.
+            </p>
+          </div>
         </div>
 
         <a href="/about-us" class="about__link">Learn More →</a>
@@ -67,7 +69,6 @@ const stats = [
   max-width: 662px;
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
 
   @include tablet {
     max-width: none;

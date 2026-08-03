@@ -45,6 +45,11 @@ const tag = computed(() => (props.href ? resolveComponent("NuxtLink") : "button"
     transform: translateY(-1px);
     box-shadow: 0 10px 24px rgba($color-logo-red, 0.2);
   }
+  // responsive
+  @include mobile {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 16px;
+  }
 }
 
 .btn--secondary {

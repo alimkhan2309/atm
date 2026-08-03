@@ -62,7 +62,7 @@ onMounted(() => {
       ease: "none",
       scrollTrigger: {
         trigger: sectionRef.value,
-        start: "top top",
+        start: "top+=50 top",
         end: () => `+=${distance}`, // vertical scroll distance needed to fully reveal the track
         pin: true, // this is what "locks" vertical scroll until the horizontal scroll finishes
         scrub: 1, // ties progress directly to scroll position, with slight smoothing
@@ -93,8 +93,8 @@ onUnmounted(() => {
 <template>
   <section ref="sectionRef" class="section section--base">
     <div class="journey__content">
-      <div class="journey__header">
-        <div class="journey__header-intro">
+      <div class="header">
+        <div class="header__intro">
           <span class="header__eyebrow">How we work</span>
           <h2 class="header__heading">From Concept to Commissioning</h2>
         </div>
@@ -137,33 +137,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
-.journey__content {
+section {
   display: flex;
   flex-direction: column;
-  gap: $spacing-xl;
-}
-
-.journey__header {
-  display: flex;
   gap: $spacing-lg;
-  align-items: flex-end;
-
-  @include below-desktop {
-    flex-direction: column;
-    align-items: stretch;
-  }
 }
-
-.journey__header-intro,
-.journey__header-description {
-  flex: 1 1 0;
-}
-
-.journey__header-description {
-  margin: 0;
-  color: $color-text-secondary;
-}
-
 .journey__steps {
   // Default (mobile/tablet): native horizontal scroll, same as before.
   overflow-x: auto;
@@ -171,6 +149,16 @@ onUnmounted(() => {
   scroll-snap-type: x proximity;
   scroll-behavior: smooth;
   touch-action: pan-x;
+
+  // Mobile: no scrolling at all — cards stack as full-width rows.
+  @include mobile {
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+    touch-action: auto;
+  }
 
   // Desktop, once pinned: GSAP drives movement via transform instead —
   // native scroll needs to be off, or the two would fight each other.
@@ -185,5 +173,16 @@ onUnmounted(() => {
   display: flex;
   gap: $spacing-md;
   width: max-content; // lets the track be exactly as wide as all cards combined
+
+  @include mobile {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.scroll-rail__indicator {
+  @include mobile {
+    display: none;
+  }
 }
 </style>

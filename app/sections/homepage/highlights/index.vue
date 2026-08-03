@@ -80,16 +80,18 @@ function onListMouseMove(e: MouseEvent) {
 <template>
   <section class="section section--base">
     <div class="highlights__content">
-      <div class="header__intro">
-        <span class="header__eyebrow">What we build</span>
-        <h2 class="header__heading">Capability Highlights</h2>
-      </div>
+      <div class="header highlights__header">
+        <div class="header__intro">
+          <span class="header__eyebrow">What we build</span>
+          <h2 class="header__heading">Capability Highlights</h2>
+        </div>
 
-      <p class="header__body">
-        From single robotic cells to fully automated production lines, our
-        in-house team designs, builds and commissions the systems that keep
-        advanced manufacturing running.
-      </p>
+        <p class="header__body">
+          From single robotic cells to fully automated production lines, our
+          in-house team designs, builds and commissions the systems that keep
+          advanced manufacturing running.
+        </p>
+      </div>
 
       <div
         ref="listRef"
@@ -136,7 +138,6 @@ function onListMouseMove(e: MouseEvent) {
 .highlights__content {
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
 }
 
 .highlights__list {
@@ -183,7 +184,7 @@ function onListMouseMove(e: MouseEvent) {
 
 .highlights__description {
   margin: 0;
-  max-width: 520px;
+  max-width: 720px;
   font-family: $font-primary;
   font-size: $fs-body;
   font-weight: $fw-regular;
