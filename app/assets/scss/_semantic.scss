@@ -1,0 +1,226 @@
+@use 'variables' as *;
+@use 'responsive' as *;
+
+// ==========================================================================
+// Alternating section backgrounds
+// ==========================================================================
+
+.section--base {
+  background-color: $color-bg-base;
+
+  p,
+  .header__body {
+    color: $color-text-secondary; // #6C6C6C
+  }
+}
+
+.section--alt {
+  background-color: $color-bg-alt; // #EBEAEA
+
+  p,
+  .header__body {
+    color: $color-text-alt; // #4A4A49
+  }
+}
+
+// ==========================================================================
+// Shared page / section header helpers
+// ==========================================================================
+
+.page__eyebrow,
+.header__eyebrow {
+  font-family: $font-mono;
+  font-size: $fs-eyebrow;
+  font-weight: $fw-bold;
+  line-height: $lh-tag;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $color-accent-400;
+}
+
+.page__title,
+.header__heading {
+  font-family: $font-primary;
+  font-weight: $fw-medium;
+  font-size: $fs-section-heading;
+  line-height: $lh-heading;
+  color: $color-text-primary;
+}
+
+.page__body,
+.header__body {
+  font-family: $font-primary;
+  font-size: $fs-body;
+  font-weight: $fw-regular;
+  line-height: $lh-body;
+  color: $color-text-secondary;
+}
+
+// ==========================================================================
+// Reusable horizontal scroll rail
+// ==========================================================================
+
+.scroll-rail {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.scroll-rail__indicator {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: $color-grey-100;
+}
+
+.scroll-rail__indicator-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: $color-accent-500;
+  will-change: transform, width;
+}
+
+.scroll-rail__viewport {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ==========================================================================
+// Card title typography
+// ==========================================================================
+
+.card-title {
+  font-family: $font-primary;
+  font-size: $fs-card-title; // 22px
+  font-weight: $fw-regular;
+  line-height: $lh-tight;
+}
+
+// ==========================================================================
+// Header block — eyebrow / heading / body / optional CTA
+// Usage: <div class="header">
+//          <div class="header__intro">
+//            <span class="header__eyebrow">...</span>
+//            <h2 class="header__heading">...</h2>
+//          </div>
+//          <p class="header__body">...</p>
+//          <a class="btn btn--primary">...</a>   (optional)
+//        </div>
+// ==========================================================================
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md; // 24px — between intro block, body, and button
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs; // 8px — eyebrow to heading, specifically
+  }
+
+  &__eyebrow {
+    font-family: $font-mono;
+    font-size: $fs-eyebrow;
+    font-weight: $fw-bold;
+    line-height: $lh-tag;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $color-accent-400; // AA-safe red for small text — never accent-500
+  }
+
+  &__heading {
+    font-family: $font-primary;
+    font-weight: $fw-medium;
+    font-size: $fs-section-heading; // 44px
+    line-height: $lh-heading;
+    color: $color-text-primary;
+  }
+
+  &__body {
+    font-family: $font-primary;
+    font-weight: $fw-regular;
+    font-size: $fs-body;
+    line-height: $lh-body;
+    max-width: 640px;
+  }
+
+  // Hero-only override — do not use outside the hero section
+  &--hero {
+    .header__eyebrow {
+      color: $color-bg-base; // sits on dark hero background
+    }
+
+    .header__heading {
+      font-size: $fs-hero-h1; // 63px
+      line-height: $lh-tight;
+      color: $color-bg-base;
+    }
+  }
+}
+
+// ==========================================================================
+// Button component
+// Usage: <button class="btn btn--primary">Discuss Your Project</button>
+//        <button class="btn btn--secondary">See Our Work</button>
+// ==========================================================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-primary;
+  font-weight: $fw-medium;
+  font-size: $fs-body; // 17px
+  padding: $spacing-md $spacing-sm; // 24px 16px
+  border-radius: $radius-md; // 4px
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &--primary {
+    background-color: $color-accent-400; // #D62A31 — passes AA with white text
+    color: $color-bg-base;
+  }
+
+  &--secondary {
+    background-color: $color-bg-base;
+    color: $color-text-primary;
+    border: 1px solid $color-grey-100;
+  }
+}
+
+// ==========================================================================
+// Tag component
+// Usage: <span class="tag">Vision inspection</span>
+// NOTE: pill radius here is a deliberate spec choice — flagged as a system
+// exception, since we previously ruled pill shapes out elsewhere on the site.
+// ==========================================================================
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: $font-primary;
+  font-weight: $fw-regular;
+  font-size: $fs-tag; // 12px
+  line-height: $lh-tag; // 150%
+  padding: $spacing-2xs $spacing-sm; // 4px 8px
+  border-radius: $radius-pill; // 32px
+  border: 1px solid $color-accent-200;
+  color: $color-accent-400;
+  background-color: transparent;
+}

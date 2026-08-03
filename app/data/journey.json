@@ -1,0 +1,40 @@
+{
+  "journey": [
+    {
+      "id": "process-understanding-feasibility",
+      "step": 1,
+      "title": "Process Understanding & Feasibility",
+      "description": "We begin by understanding the customer's product, process, production environment and project objectives. This includes reviewing current operations, production challenges, quality requirements, operator interaction, available space and future volume expectations."
+    },
+    {
+      "id": "proof-of-principle-prototyping",
+      "step": 2,
+      "title": "Proof of Principle & Prototyping",
+      "description": "Where required, we develop proof-of-principle trials and prototype tooling to validate key process steps before full machine design begins. This helps reduce technical risk and gives customers confidence that the proposed automation approach is practical and achievable."
+    },
+    {
+      "id": "mechanical-electrical-software-design",
+      "step": 3,
+      "title": "Mechanical, Electrical & Software Design",
+      "description": "Our in-house engineering team develops the complete machine design, including mechanical systems, electrical architecture, control software, HMI design, safety systems, tooling, guarding and product handling. Each system is designed around reliability, access, maintenance and long-term production performance."
+    },
+    {
+      "id": "inspection-testing-validation",
+      "step": 4,
+      "title": "Inspection, Testing & Validation",
+      "description": "We integrate inspection, testing and validation processes into bespoke manufacturing systems. This can include vision inspection, leak testing, functional testing, force measurement, dimensional checks, data capture, traceability and end-of-line verification."
+    },
+    {
+      "id": "machine-build-commissioning",
+      "step": 5,
+      "title": "Machine Build & Commissioning",
+      "description": "Machines are assembled, wired, tested and commissioned at our UK facility before installation. Our team manages mechanical build, electrical installation, system integration, debugging, factory acceptance testing and production readiness checks."
+    },
+    {
+      "id": "lifecycle-support-upgrades",
+      "step": 6,
+      "title": "Lifecycle Support & Upgrades",
+      "description": "We support customers beyond installation with ongoing technical support, machine modifications, upgrades, spare parts, process improvements and lifecycle assistance. This helps maintain equipment performance as products, production volumes and manufacturing requirements evolve."
+    }
+  ]
+}

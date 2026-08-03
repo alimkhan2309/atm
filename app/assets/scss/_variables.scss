@@ -1,0 +1,95 @@
+@use 'sass:math';
+
+// ==========================================================================
+// ATM Automation — Design Tokens (raw values)
+// ==========================================================================
+
+// Colors — brand
+$color-logo-red: #F12F35;
+
+// Colors — accent scale
+$color-accent-100: #FDECEC;
+$color-accent-200: #F8A6A9; // tag stroke
+$color-accent-400: #D62A31; // primary button bg / AA-safe red text
+$color-accent-500: #F4434A; // base UI red, large-scale/decorative use only
+
+// Colors — grey scale
+$color-grey-50:  #F2F2F1;
+$color-grey-75:  #EBEAEA; // alt section background
+$color-grey-100: #E3E3E2;
+$color-grey-400: #ABABAA;
+$color-grey-600: #7A7B7B;
+$color-grey-800: #4A4A49;
+
+// Colors — text
+$color-text-primary:   #1A1A18;
+$color-text-secondary: #6C6C6C; // body copy — base sections
+$color-text-alt:       #4A4A49; // body copy — alt (grey-100) sections
+
+// Colors — background
+$color-bg-base: #FAFAF8;
+$color-bg-alt:  $color-grey-75;
+$color-bg-dark: #141414; // hero only — do not reuse elsewhere
+
+// Typography
+$font-primary: 'PP Neue Montreal', 'General Sans', sans-serif;
+$font-mono:    'PP Fraktion Mono', 'Space Mono', monospace;
+
+$fw-regular:  400;
+$fw-medium:   500;
+$fw-bold:     700;
+
+@function fluid-type($min-size, $max-size, $min-vw: 375, $max-vw: 1440) {
+  $slope: math.div($max-size - $min-size, $max-vw - $min-vw);
+  $y-intercept: $min-size - $slope * $min-vw;
+  @return clamp(#{$min-size}px, #{$y-intercept}px + #{$slope * 100}vw, #{$max-size}px);
+}
+
+// Fluid — responsive display/body tokens
+$fs-hero-h1:         fluid-type(36, 63);
+$fs-section-heading: fluid-type(28, 44);
+$fs-hero-eyebrow:    fluid-type(14, 22);
+$fs-body:            fluid-type(17, 22);
+$fs-stats:           fluid-type(44, 74);
+
+// Static — deliberately not fluid, see rationale in the typography spec
+$fs-tag:             13px;
+$fs-eyebrow:         13px;
+$fs-card-title:      22px;
+
+$lh-tight:   1.1;
+$lh-heading: 1.2;
+$lh-body:    1.5;
+$lh-tag:     1.5; // 150%
+
+// Spacing
+$spacing-2xs: 4px;
+$spacing-xs:  8px;
+$spacing-sm:  16px;
+$spacing-md:  24px;
+$spacing-lg:  40px;
+$spacing-xl:  64px;
+$spacing-2xl: 96px;
+$spacing-3xl: 144px;
+
+// Radius
+$radius-none: 0;
+$radius-sm:   2px;
+$radius-md:   4px;
+$radius-pill: 32px; // tag component only — flagged, conflicts with sharp-corner system
+
+// Section padding defaults (desktop)
+$section-padding-y: $spacing-xl; // 64px
+$section-padding-x: $spacing-2xl; // 96px
+
+// Section padding breakpoints
+$section-padding-y-tablet: $spacing-xl; // 64px
+$section-padding-x-tablet: $spacing-lg; // 40px
+$section-padding-y-mobile: $spacing-lg; // 40px
+$section-padding-x-mobile: $spacing-md; // 24px
+$section-padding-y-wide: $spacing-2xl; // 144px
+$section-padding-x-wide: $spacing-3xl; // 144px
+// Breakpoints
+$bp-mobile:  600px;
+$bp-tablet:  768px;
+$bp-desktop: 1440px;

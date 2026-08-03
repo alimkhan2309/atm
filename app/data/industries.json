@@ -1,0 +1,94 @@
+{
+  "industries": [
+    {
+      "id": "medical-devices-diagnostics",
+      "order": 1,
+      "name": "Medical Devices & Diagnostics",
+      "image": "medical_devices_and_diagnostics.png",
+      "description": "ATM Automation has extensive experience delivering bespoke automation equipment for the medical device sector. Our systems support high-volume production environments where quality, traceability and process control are critical.",
+      "tags": [
+        "Device assembly",
+        "Component handling",
+        "Vision inspection",
+        "Leak testing",
+        "Functional testing",
+        "End-of-line verification"
+      ]
+    },
+    {
+      "id": "automotive-manufacturing",
+      "order": 2,
+      "name": "Automotive Manufacturing",
+      "image": "automotive_manufacturing.png",
+      "description": "ATM Automation delivers bespoke automation systems for automotive component and vehicle manufacturing. Our equipment is designed to improve productivity, quality and process consistency within demanding production environments.",
+      "tags": [
+        "Component assembly",
+        "Fixture-based production",
+        "Robotic handling",
+        "Vision inspection",
+        "Functional testing",
+        "End-of-line verification"
+      ]
+    },
+    {
+      "id": "food-consumer-products",
+      "order": 3,
+      "name": "Food & Consumer Products",
+      "image": "food_and_consumer_products.png",
+      "description": "ATM Automation delivers bespoke automation systems for food, beverage and consumer product manufacturing environments. Our equipment supports improved throughput, product quality, traceability and operational efficiency across packaging, handling and production processes.",
+      "tags": [
+        "Product handling",
+        "Packaging automation",
+        "Cartoning systems",
+        "Pick-and-place operations",
+        "Vision inspection",
+        "End-of-line handling"
+      ]
+    },
+    {
+      "id": "healthcare-ppe",
+      "order": 4,
+      "name": "Healthcare & PPE",
+      "image": "healthcare_and_PPE.png",
+      "description": "ATM Automation delivers bespoke automation systems for healthcare and PPE manufacturing environments where product quality, traceability and process consistency are critical. Our equipment supports regulated assembly, handling, inspection, packaging and testing processes from development through to production.",
+      "tags": [
+        "PPE product assembly",
+        "Medical consumable assembly",
+        "Product handling and transfer",
+        "Vision inspection and quality checks",
+        "Leak and seal testing",
+        "End-of-line verification"
+      ]
+    },
+    {
+      "id": "energy-clean-technology",
+      "order": 5,
+      "name": "Energy & Clean Technology",
+      "image": "energy-clean-technology.png",
+      "description": "ATM Automation delivers bespoke automation systems for energy storage, battery, fuel cell and clean technology manufacturing applications. Our equipment supports precision assembly, component handling, inspection, leak testing, functional testing and process validation within advanced manufacturing environments.",
+      "tags": [
+        "Battery module assembly",
+        "Fuel cell component handling",
+        "Precision assembly",
+        "Critical measurement analysis",
+        "AI vision inspection",
+        "Functional testing"
+      ]
+    },
+    {
+      "id": "plastics-packaging",
+      "order": 6,
+      "name": "Plastics & Packaging",
+      "image": "plastics_and_packaging.png",
+      "description": "ATM Automation delivers bespoke automation systems for plastics processing, packaging and high-volume manufacturing environments. Our equipment supports automated handling, assembly, inspection and packaging processes where productivity, quality and consistency are critical.",
+      "tags": [
+        "Plastic component handling",
+        "Packaging automation",
+        "Injection moulding support",
+        "Product assembly",
+        "Vision inspection",
+        "End-of-line packaging"
+      ]
+    }
+  ]
+}
