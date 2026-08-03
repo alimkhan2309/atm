@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const navLinks = [
   { label: "Home", to: "/" },
-  { label: "About", to: "/about-us" },
-  { label: "Services", to: "/services" },
-  { label: "Contact", to: "/contact" },
+  { label: "Industries", to: "/industries" },
+  { label: "Capabilities", to: "/capabilities" },
+  { label: "Projects", to: "/projects" },
+  { label: "VR Suite", to: "/vr-suite" },
+  { label: "About", to: "/about" },
 ];
-
 const isMenuOpen = ref(false);
 const isInHero = ref(true);
 const isMobile = ref(false);
@@ -129,6 +130,7 @@ onUnmounted(() => {
 
 .links {
   position: relative;
+  width: fit-content;
   display: flex;
   padding: $spacing-xs $spacing-sm;
   justify-content: flex-end; // keeps the group pinned to the right edge — this
@@ -151,7 +153,7 @@ onUnmounted(() => {
   margin-right: $spacing-2xs;
   padding: 0 $spacing-2xs 0 $spacing-md;
   height: fit-content;
-  max-width: 500px; // animation target — generous cap, see note below
+  max-width: 800px; // animation target — generous cap, see note below
   overflow: hidden;
   white-space: nowrap;
   transition: max-width 0.35s ease, opacity 0.25s ease;
@@ -295,21 +297,37 @@ onUnmounted(() => {
     display: none; // moves into the dropdown panel below when open
   }
 
-  // Dropdown panel — only rendered visually when the menu is open
+  // Dropdown panel — the whole panel is one fixed-position flex container.
+  // List and CTA are normal flow children inside it, so the button always
+  // sits right after the list regardless of how many links there are.
   .links:has(.burger--open) {
+    position: fixed;
+    top: 64px; // roughly the navbar's height — adjust once measured live
+    left: $spacing-md;
+    right: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    max-height: calc(100vh - 64px - #{$spacing-md} * 2);
+    overflow-y: auto; // safety net if the list ever outgrows the viewport
+    background-color: $color-bg-dark;
+    border-radius: $radius-md;
+    opacity: 1;
+    
+    width: 94vw;
+    height: 90dvh;
+    align-items: start;
+    justify-content: space-between;
+
     .links__list {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       gap: $spacing-xs;
-      position: fixed;
-      top: 64px; // roughly the navbar's height — adjust once measured live
-      left: $spacing-md;
-      right: $spacing-md;
+      position: static; // no longer independently pinned
       max-width: none;
-      padding: $spacing-md;
-      background-color: $color-bg-dark;
-      border-radius: $radius-md;
+      padding: 0;
       opacity: 1;
 
       li {
@@ -320,10 +338,7 @@ onUnmounted(() => {
 
     .links__cta {
       display: block;
-      position: fixed;
-      top: calc(64px + 240px); // below the link panel — adjust once measured live
-      left: $spacing-md;
-      right: $spacing-md;
+      position: static; // no longer independently pinned — just flows after the list
       text-align: center;
     }
   }

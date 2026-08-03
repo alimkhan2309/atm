@@ -57,7 +57,7 @@ function handleSubmit() {
               id="lastName"
               v-model="form.lastName"
               type="text"
-              placeholder="Last name"
+              placeholder="Last Name"
               class="contact__input"
             />
           </div>
