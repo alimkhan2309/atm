@@ -47,11 +47,6 @@ useNumber(sectionRef)
               bespoke automation, assembly, inspection and manufacturing equipment for
               regulated and advanced manufacturing industries.
             </p>
-            <p class="header__body">
-              For 50 years, ATM Automation has specialised in the design and build of
-              bespoke automation, assembly, inspection and manufacturing equipment for
-              regulated and advanced manufacturing industries.
-            </p>
           </div>
         </div>
 
