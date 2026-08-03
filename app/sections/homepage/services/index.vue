@@ -9,10 +9,24 @@ const selectedServiceId = ref(services[0]?.id ?? "");
 const selectedService = computed(
   () => services.find((service) => service.id === selectedServiceId.value) ?? services[0]
 );
+const sectionRef = ref<HTMLElement | null>(null); // pin target — whole section, header included
+
+// Header animation
+useScrollReveal(sectionRef, ".header__eyebrow, .header__heading, .header__body, .about__link", {
+  preset: "fade-up",
+  stagger: 0.2,
+  start: "top 80%",
+});
+// List animation
+useScrollReveal(sectionRef, ".services__list-item", {
+  preset: "fade-up",
+  stagger: 0.3,
+  start: "top 80%",
+});
 </script>
 
 <template>
-  <section class="section services section--alt">
+  <section ref="sectionRef" class="section services section--alt">
     <div class="services__content">
       <div class="header services__header">
         <div class="header__intro">

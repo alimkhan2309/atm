@@ -9,11 +9,13 @@ import UiButton from "~/components/ui/Button.vue";
 // In both skip cases we fall back to the original static hero image instead.
 const showVideo = ref(false);
 const videoRef = ref<HTMLVideoElement | null>(null);
+const heroRef = ref<HTMLElement | null>(null);
+
+useHeroIntro({ scope: heroRef, media: videoRef });
 
 onMounted(() => {
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const isMobileViewport = window.matchMedia("(max-width: 599px)").matches;
 
   showVideo.value = !prefersReducedMotion && !isMobileViewport;
@@ -27,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="hero">
+  <section class="hero" ref="heroRef">
     <video
       v-if="showVideo"
       ref="videoRef"
@@ -42,8 +44,9 @@ onMounted(() => {
     />
     <img
       v-else
+      ref="videoRef"
       class="hero__media"
-      src="/images/hero.jpg"
+      src="/images/hero-mobile.png"
       alt="ATM Automation robotic assembly system in operation"
       loading="eager"
       fetchpriority="high"
@@ -59,8 +62,8 @@ onMounted(() => {
       />
 
       <div class="hero__actions">
-        <UiButton href="/contact" variant="primary">Discuss Your Project</UiButton>
-        <UiButton href="/services" variant="secondary">See Our Work</UiButton>
+        <UiButton class="hero-button" href="/contact" variant="primary">Discuss Your Project</UiButton>
+        <UiButton class="hero-button" href="/services" variant="secondary">See Our Work</UiButton>
       </div>
     </div>
   </section>
@@ -70,7 +73,7 @@ onMounted(() => {
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   padding: $section-padding-y $section-padding-x;
   display: block;
@@ -105,8 +108,8 @@ onMounted(() => {
   z-index: 1;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.2) 38%,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.5) 38%,
     rgba(0, 0, 0, 1) 96%
   );
 }
@@ -145,6 +148,7 @@ onMounted(() => {
   }
   @include mobile {
     align-items: start;
+    gap: $spacing-xs;
     flex-direction: column;
   }
 }
@@ -159,6 +163,11 @@ onMounted(() => {
 
   &:hover {
     border-color: $color-bg-base;
+  }
+}
+.hero-button {
+  @include mobile {
+    width: 100%;
   }
 }
 </style>

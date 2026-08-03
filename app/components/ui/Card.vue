@@ -5,34 +5,55 @@ interface Props {
   description: string;
 }
 defineProps<Props>();
+
+// Track expanded state for mobile accordion toggle
+const isOpen = ref(false);
+
+function toggleAccordion() {
+  isOpen.value = !isOpen.value;
+}
 </script>
 
 <template>
-  <div class="card">
+  <div
+    class="card"
+    :class="{ 'card--open': isOpen }"
+    tabindex="0"
+    role="button"
+    :aria-expanded="isOpen"
+    @click="toggleAccordion"
+    @keydown.enter.space.prevent="toggleAccordion"
+  >
     <span class="card__number" aria-hidden="true">{{ number }}</span>
 
-    <h3 class="card-title card__title">{{ title }}</h3>
+    <div class="card__header-wrap">
+      <h3 class="card-title card__title">{{ title }}</h3>
+      <!-- Chevron indicator visible on mobile only -->
+      <span class="card__chevron" aria-hidden="true" />
+    </div>
 
     <div class="card__divider">
       <span class="card__rule" />
       <span class="card__dot" />
     </div>
 
-    <p class="card__description">{{ description }}</p>
+    <div class="card__body">
+      <p class="card__description">{{ description }}</p>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .card {
-  position: relative; // anchors the absolutely-positioned number
+  position: relative;
   width: 400px;
-  min-width: 320.33px;
-  height: 600px;
-  padding: $spacing-md; // 24px
+  min-width: 320px;
+  height: 640px;
+  padding: $spacing-md;
   border-radius: $radius-md;
   background-color: $color-accent-100;
   border: 1px solid rgba($color-text-primary, 0.06);
-  overflow: hidden; // clips the number if it ever runs past the card edge
+  overflow: hidden;
   scroll-snap-align: start;
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 
@@ -56,18 +77,16 @@ defineProps<Props>();
     }
   }
 
-  // Mobile: no horizontal scroll rail — collapse into a two-column row.
-  // Number sits in a fixed left column spanning every row; title, divider,
-  // and description flow down the right column in document order.
+  // --- MOBILE ACCORDION STYLES ---
   @include mobile {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: $spacing-sm;
-    row-gap: $spacing-2xs;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     min-width: 0;
-    height: auto;
+    height: auto; // override desktop fixed height
     padding: $spacing-md;
+    cursor: pointer;
+    border-bottom: 1px solid rgba($color-text-primary, 0.1);
     scroll-snap-align: none;
 
     @media (hover: hover) {
@@ -79,64 +98,73 @@ defineProps<Props>();
   }
 }
 
+.card__header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .card__title {
   position: relative;
   z-index: 1;
   color: $color-text-primary;
   margin: 0;
   letter-spacing: -0.01em;
+}
+
+.card__chevron {
+  display: none;
 
   @include mobile {
-    grid-column: 2;
-    grid-row: 1;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid $color-accent-400;
+    border-bottom: 2px solid $color-accent-400;
+    transform: rotate(45deg);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-left: $spacing-xs;
+    flex-shrink: 0;
+
+    .card--open & {
+      transform: rotate(-135deg);
+    }
   }
 }
 
-// Decorative ghost numeral — removed from flow entirely, doesn't affect
-// title/divider/description positioning at all. Fixed coordinates mean it
-// sits in the same spot on every card, regardless of content length.
 .card__number {
   position: absolute;
   left: $spacing-md;
-  bottom: 8px; // tune this against the fixed divider gap below until it sits flush
+  bottom: 8px;
   z-index: 0;
   font-family: $font-mono;
   font-weight: $fw-bold;
   font-size: 96px;
   line-height: 1;
-  color: rgba($color-text-primary, 0.12); // "ghost" tint — not a shared token, single use
+  color: rgba($color-text-primary, 0.12);
   transition: color 0.35s ease;
 
-  // On mobile the ghost treatment doesn't read at row height, so it becomes
-  // a small solid step-marker instead — same font, opposite scale.
   @include mobile {
     position: static;
-    grid-column: 1;
-    grid-row: 1 / -1;
-    align-self: start;
-    width: 32px;
     font-size: $fs-card-title;
     line-height: $lh-tight;
     color: $color-accent-400;
-    opacity: 1;
+    margin-bottom: $spacing-2xs;
   }
 }
 
-// Fixed gap from the title — this is what makes the divider land in the
-// same place on every card, instead of depending on flex leftover space.
 .card__divider {
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
-  margin-top: $spacing-2xl; // 96px — fixed, not derived from remaining space
+  margin-top: $spacing-2xl;
   margin-bottom: $spacing-sm;
 
   @include mobile {
-    grid-column: 2;
-    grid-row: 2;
     margin-top: $spacing-xs;
-    margin-bottom: $spacing-2xs;
+    margin-bottom: $spacing-xs;
   }
 }
 
@@ -147,7 +175,7 @@ defineProps<Props>();
   transition: background-color 0.35s ease;
 
   @include mobile {
-    flex-basis: 40%;
+    flex-basis: 100%;
   }
 }
 
@@ -161,9 +189,22 @@ defineProps<Props>();
   transition: transform 0.35s ease;
 }
 
-.card__description {
+.card__body {
   position: relative;
   z-index: 1;
+
+  @include mobile {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+    .card--open & {
+      grid-template-rows: 1fr;
+    }
+  }
+}
+
+.card__description {
   margin: 0;
   color: $color-text-secondary;
   font-family: $font-primary;
@@ -172,8 +213,7 @@ defineProps<Props>();
   line-height: $lh-body;
 
   @include mobile {
-    grid-column: 2;
-    grid-row: 3;
+    overflow: hidden; // CSS grid row animation requires overflow hidden on child
   }
 }
 </style>

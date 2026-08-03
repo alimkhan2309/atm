@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ArrowUpRight } from "lucide-vue-next";
-
+import { useScrollReveal } from '~/composables/useScrollReveal';
 interface Highlight {
   id: string;
   title: string;
@@ -43,7 +43,20 @@ const highlights: Highlight[] = [
     href: "/capabilities/bespoke-machine-systems", // placeholder — confirm real destination
   },
 ];
+// Header animation
+const sectionRef = ref<HTMLElement | null>(null); // pin target — whole section, header included
+useScrollReveal(sectionRef, ".header__eyebrow, .header__heading, .header__body, .about__link", {
+  preset: "fade-up",
+  stagger: 0.2,
+  start: "top 80%",
+});
 
+// List Animation
+useScrollReveal(sectionRef, ".highlights__row", {
+  preset: "fade-up",
+  stagger: 0.3,
+  start: "top 80%",
+});
 // Only bother with the cursor-follow effect on devices that actually have
 // hover (mouse/trackpad) — meaningless on touch, and we don't want a phantom
 // floating image stuck on screen after a tap.
@@ -78,7 +91,7 @@ function onListMouseMove(e: MouseEvent) {
 </script>
 
 <template>
-  <section class="section section--base">
+  <section ref="sectionRef" class="section section--base">
     <div class="highlights__content">
       <div class="header highlights__header">
         <div class="header__intro">

@@ -2,6 +2,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { useScrollReveal } from '~/composables/useScrollReveal';
 import journeyData from "~/data/journey.json";
 
 const steps = [...journeyData.journey].sort((a, b) => a.order - b.order);
@@ -14,6 +15,20 @@ const indicatorWidth = ref(20);
 const indicatorOffset = ref(0);
 const isPinned = ref(false); // true only when the desktop scroll-jack is active
 
+// Header animation
+useScrollReveal(sectionRef, ".header__eyebrow, .header__heading, .header__body, .about__link", {
+  preset: "fade-up",
+  stagger: 0.2,
+  start: "top 80%",
+});
+
+// Cards
+useScrollReveal(sectionRef, ".journey-card", {
+  preset: "fade-up",
+  stagger: 0.6,
+  start: "top 80%",
+})
+
 // Native scroll indicator — only relevant on mobile/tablet, where the rail
 // still scrolls normally via the browser's own horizontal scrollLeft.
 function updateScrollIndicatorNative() {
@@ -22,7 +37,7 @@ function updateScrollIndicatorNative() {
 
   const maxScroll = viewport.scrollWidth - viewport.clientWidth;
   if (maxScroll <= 0) {
-    indicatorWidth.value = 100;
+    indicatorWidth.value = 110;
     indicatorOffset.value = 0;
     return;
   }
@@ -49,26 +64,27 @@ onMounted(() => {
     if (!viewport || !track) return;
 
     const distance = track.scrollWidth - viewport.clientWidth;
+    
     if (distance <= 0) return; // nothing to scroll — don't pin for no reason
 
     isPinned.value = true;
 
     // Share of content visible at once — fixed for the duration of the
     // pin, only the offset moves as the user scrolls.
-    indicatorWidth.value = Math.max(20, (viewport.clientWidth / track.scrollWidth) * 100);
+    indicatorWidth.value = Math.max(24, (viewport.clientWidth / track.scrollWidth) * 100);
 
     const tween = gsap.to(track, {
       x: -distance,
       ease: "none",
       scrollTrigger: {
         trigger: sectionRef.value,
-        start: "top+=50 top",
+        start: "top+=290 top",
         end: () => `+=${distance}`, // vertical scroll distance needed to fully reveal the track
         pin: true, // this is what "locks" vertical scroll until the horizontal scroll finishes
         scrub: 1, // ties progress directly to scroll position, with slight smoothing
         invalidateOnRefresh: true, // recalculates `distance` correctly on resize
         onUpdate: (self) => {
-          indicatorOffset.value = self.progress * (100 - indicatorWidth.value);
+          indicatorOffset.value = self.progress * (120 - indicatorWidth.value);
         },
       },
     });
@@ -124,6 +140,7 @@ onUnmounted(() => {
           <div ref="trackRef" class="journey__track">
             <Card
               v-for="step in steps"
+              class="journey-card"
               :key="step.id"
               :number="step.step"
               :title="step.title"
@@ -135,35 +152,60 @@ onUnmounted(() => {
     </div>
   </section>
 </template>
-
 <style scoped lang="scss">
 section {
   display: flex;
   flex-direction: column;
   gap: $spacing-lg;
+  // Make sure section handles outer clipping to prevent body scrollbars
+  overflow-x: clip; 
+  
+  @include mobile {
+    height: auto;
+  }
 }
+
+.journey__content {
+  gap: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+}
+
+// 1. Full-bleed container: pull to the screen edges
+.scroll-rail {
+  margin-left: -$section-padding-x;
+  margin-right: -$section-padding-x;
+
+  @include below-desktop {
+    margin-left: -$section-padding-x-tablet;
+    margin-right: -$section-padding-x-tablet;
+  }
+
+  @include mobile {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 .journey__steps {
-  // Default (mobile/tablet): native horizontal scroll, same as before.
+  // Default (mobile/tablet): native horizontal scroll
   overflow-x: auto;
   padding-bottom: $spacing-xs;
   scroll-snap-type: x proximity;
   scroll-behavior: smooth;
   touch-action: pan-x;
 
-  // Mobile: no scrolling at all — cards stack as full-width rows.
   @include mobile {
-    overflow-x: visible;
-    overflow-y: visible;
+    overflow: visible;
     padding-bottom: 0;
     scroll-snap-type: none;
     scroll-behavior: auto;
     touch-action: auto;
   }
 
-  // Desktop, once pinned: GSAP drives movement via transform instead —
-  // native scroll needs to be off, or the two would fight each other.
+  // 2. Desktop pinned state: allow visible overflow so cards bleed smoothly offscreen
   &--pinned {
-    overflow: hidden;
+    overflow: visible;
     scroll-snap-type: none;
     touch-action: auto;
   }
@@ -172,15 +214,37 @@ section {
 .journey__track {
   display: flex;
   gap: $spacing-md;
-  width: max-content; // lets the track be exactly as wide as all cards combined
+  width: max-content;
+  height: 660px;
+
+  // 3. Align first card with the section text by adding left/right padding inside the track
+  padding-left: $section-padding-x;
+  padding-right: $section-padding-x;
+
+  @include below-desktop {
+    padding-left: $section-padding-x-tablet;
+    padding-right: $section-padding-x-tablet;
+  }
 
   @include mobile {
     flex-direction: column;
     width: 100%;
+    height: auto;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 .scroll-rail__indicator {
+  // Keep the indicator inside original section padding bounds
+  margin-left: $section-padding-x;
+  margin-right: $section-padding-x;
+
+  @include below-desktop {
+    margin-left: $section-padding-x-tablet;
+    margin-right: $section-padding-x-tablet;
+  }
+
   @include mobile {
     display: none;
   }

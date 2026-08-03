@@ -1,14 +1,36 @@
 <script setup lang="ts">
+import { useScrollReveal } from '~/composables/useScrollReveal';
+import { useNumber } from "~/composables/useNumber";
+
 const stats = [
   { value: "8+", label: "Industries Served" },
   { value: "50", label: "Years' Experience" },
   { value: "5000+", label: "Projects Delivered" },
   { value: "UK", label: "Design, Build & Support Facility" },
 ];
+
+const sectionRef = ref<HTMLElement | null>(null);
+
+// 1. Reveal header intro, paragraph text, and CTA link in one fluid sequence
+useScrollReveal(sectionRef, ".header__eyebrow, .header__heading, .header__body, .about__link", {
+  preset: "fade-up",
+  stagger: 0.08,
+  start: "top 80%",
+});
+
+// 2. Reveal stats grid side-by-side with a slightly staggered scale-in or fade-up
+useScrollReveal(sectionRef, ".about__stat", {
+  preset: "fade-up",
+  stagger: 0.1,
+  start: "top 75%",
+});
+
+// 3. Numbers
+useNumber(sectionRef)
 </script>
 
 <template>
-  <section class="section section--alt">
+  <section ref="sectionRef" class="section section--alt">
     <div class="about__content">
       <div class="about__text">
         <div class="header about__header">
@@ -26,9 +48,9 @@ const stats = [
               regulated and advanced manufacturing industries.
             </p>
             <p class="header__body">
-              From our Leicester facility, our multidisciplinary engineering team
-              delivers complete turnkey solutions ranging from standalone workstations
-              to fully automated production systems.
+              For 50 years, ATM Automation has specialised in the design and build of
+              bespoke automation, assembly, inspection and manufacturing equipment for
+              regulated and advanced manufacturing industries.
             </p>
           </div>
         </div>

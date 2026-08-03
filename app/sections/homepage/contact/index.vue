@@ -14,7 +14,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <section id="contact" class="section section--contact">
+  <section id="contact" class="section section--alt">
     <div class="contact__content">
       <div class="contact__info">
         <h2 class="contact__heading">Contact Us</h2>
@@ -112,9 +112,6 @@ function handleSubmit() {
 </template>
 
 <style scoped lang="scss">
-.section--contact {
-  background-color: $color-accent-100;
-}
 
 .contact__content {
   display: flex;
